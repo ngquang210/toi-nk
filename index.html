@@ -22,7 +22,7 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            min-width: 300px; /* Đảm bảo container không quá hẹp */
+            min-width: 300px;
         }
 
         #initial-message {
@@ -33,7 +33,7 @@
 
         #button-container button {
             padding: 12px 25px;
-            margin: 5px 10px; /* Cho phép nút xuống dòng nếu không đủ chỗ */
+            margin: 5px 10px;
             font-size: 1.1em;
             cursor: pointer;
             border: none;
@@ -67,11 +67,11 @@
             font-size: 1.3em;
             font-weight: bold;
             color: #555;
-            min-height: 50px; /* Đủ chỗ cho text dài hơn */
-            display: flex; /* Căn giữa text tốt hơn */
+            min-height: 50px;
+            display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 15px; /* Thêm padding nếu text dài */
+            padding: 0 15px;
         }
 
         .hidden {
@@ -106,8 +106,16 @@
         const messageRoyyyy = 'Đroi đó phải tích cực lên khog? ovt mỉm cười lên nhaaa 😊💪';
         const messageChuuaa = 'Ai cho chọn cái này? Ai cho phép buồn? Chọn "royyyy" ngay! 😠😂';
 
-        // Hàm để hiển thị kết quả và ẩn phần còn lại
-        function showResult(message) {
+        // Hàm để hiển thị trạng thái ban đầu (câu hỏi và nút)
+        function showInitialState() {
+            initialMessage.classList.remove('hidden');
+            buttonContainer.classList.remove('hidden');
+            resultMessage.classList.add('hidden');
+            resultMessage.textContent = ''; // Xóa nội dung tin nhắn cũ
+        }
+
+        // Hàm để hiển thị tin nhắn kết quả (ẩn câu hỏi và nút)
+        function showResultMessage(message) {
             resultMessage.textContent = message;
             initialMessage.classList.add('hidden');
             buttonContainer.classList.add('hidden');
@@ -116,19 +124,18 @@
 
         // Thêm sự kiện click cho nút "royyyy"
         btnRoyyyy.addEventListener('click', function() {
-            showResult(messageRoyyyy);
+            showResultMessage(messageRoyyyy); // Hiển thị kết quả cuối cùng
         });
 
         // Thêm sự kiện click cho nút "chuuaa do saoo"
         btnChuuaa.addEventListener('click', function() {
-            // 1. Hiển thị thông báo "chuuaa" ngay lập tức
-            showResult(messageChuuaa);
+            // 1. Hiển thị thông báo "chuuaa"
+            showResultMessage(messageChuuaa);
 
-            // 2. Đặt hẹn giờ sau 5 giây (5000 mili giây)
+            // 2. Đặt hẹn giờ để quay lại trạng thái ban đầu sau 5 giây
             setTimeout(function() {
-                // 3. Sau 5 giây, cập nhật thông báo thành thông báo "royyyy"
-                resultMessage.textContent = messageRoyyyy;
-                // Không cần gọi lại showResult vì các phần tử đã được ẩn/hiện đúng
+                // 3. Sau 5 giây, gọi hàm để hiển thị lại câu hỏi và nút
+                showInitialState();
             }, 5000); // 5000 mili giây = 5 giây
         });
         // --- JavaScript End ---
